@@ -30,20 +30,17 @@ public class RegisterUser extends HttpServlet {
             // Check if user already exists
             if (userdao.isUserExist(email, phoneNo)) {
                 req.setAttribute("errorMessage", "Email or phone number already exists.");
-                req.getRequestDispatcher("Register.jsp").forward(req, resp); // Adjust to your JSP file name
+                req.getRequestDispatcher("Register.jsp").forward(req, resp); 
             } else {
-                // Attempt to insert user
                 try {
                     UserProfile_dto user = new UserProfile_dto(firstName, lastName, email, password, phoneNo, age, gender, address);
                     userdao.insert(user);
-                    resp.sendRedirect("Login.jsp"); // Adjust to your success page
+                    resp.sendRedirect("Login.jsp"); 
                 } catch (SQLException e) {
-                    // Handle SQL Integrity Constraint Violation
                     if (e.getMessage().contains("Duplicate entry")) {
                         req.setAttribute("errorMessage", "Phone number already exists. Please use a different number.");
-                        req.getRequestDispatcher("Register.jsp").include(req, resp); // Adjust to your JSP file name
+                        req.getRequestDispatcher("Register.jsp").include(req, resp);
                     } else {
-                        // Handle other SQL exceptions as needed
                         e.printStackTrace();
                     }
                 }

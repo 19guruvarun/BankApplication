@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -114,10 +115,19 @@ body {
 <% 
     String msg1 = (String) request.getAttribute("email_invalid");
     String msg2 = (String) request.getAttribute("pass_invalid");
+   
 %>
 <div class="form-container">
     <p class="title">Welcome back</p>
-    <form class="form" action="login" method="post">
+    <%
+    String message = (String) request.getAttribute("message"); 
+    if (message != null) { 
+    %>
+        <div class="<%= request.getAttribute("messageType") %>">
+            <p style="color:teal"><%= message %></p>
+        </div>
+    <% } %>
+    <form class="form" action="home" method="post">
         <input type="email" class="input" placeholder="Enter Email" name="email" required="required">
         <%
             if (msg1 != null) {
@@ -138,6 +148,7 @@ body {
     <p class="sign-up-label">
         Don't have an account?<span><a href="Register.jsp" class="sign-up-link">Sign up</a></span>
     </p>
+  
 </div>
 </body>
 </html>
